@@ -4,5 +4,5 @@ import com.example.hospital.model.Doctor
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface DoctorRepository: JpaRepository<Doctor, Long> {
-    fun findById (id: Long?): Doctor
+    fun findById (id: Long?): Doctor?
 }
