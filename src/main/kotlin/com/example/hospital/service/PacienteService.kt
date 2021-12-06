@@ -46,6 +46,9 @@ class PacienteService {
            val response = pacienteRepository.findById(paciente.idpaciente)
                ?: throw Exception("El ID ${paciente.idpaciente}  no existe")
 
+           val response1 = pacienteRepository.findById(paciente.doctorIdDoctor)
+               ?: throw Exception("El ID ${paciente.doctorIdDoctor}  no existe")
+
            if (paciente.nombre.equals("") || paciente.apellido.equals("") || paciente.cedula.equals("") ||
                paciente.enfermedad.equals("")) {
                throw Exception("Uno de los campos esta vacio")
