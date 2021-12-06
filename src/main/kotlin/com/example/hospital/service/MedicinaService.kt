@@ -24,6 +24,10 @@ class MedicinaService {
     fun save (@RequestBody medicina: Medicina): Medicina {
 
       try {
+
+          val response1 = medicinaRepository.findById(medicina.pacienteIdPaciente)
+              ?: throw Exception("El ID ${medicina.pacienteIdPaciente}  no existe")
+
           if(medicina.dosis.equals("") || medicina.medicamento.equals("") || medicina.via.equals("")
               || medicina.fecha.equals("")){
               throw Exception("Uno de los campos esta vacio")

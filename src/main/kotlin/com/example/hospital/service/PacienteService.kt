@@ -24,19 +24,28 @@ class PacienteService {
 
     fun save (@RequestBody paciente: Paciente): Paciente {
 
-            if(paciente.nombre.equals("") || paciente.apellido.equals("") || paciente.cedula.equals("") ||
-                paciente.enfermedad.equals("") ) {
-                throw Exception("Uno de los campos esta vacio")
-            }
+     try {
 
-            if (paciente.cedula!!.length == 10 ) {
-                throw Exception("La cedula debe tener 10 digitos")
+         val response = pacienteRepository.findById(paciente.doctorIdDoctor)
+             ?: throw Exception("El ID ${paciente.doctorIdDoctor}  no existe")
 
-            } else {
-                return pacienteRepository.save(paciente)
-            }
+         if(paciente.nombre.equals("") || paciente.apellido.equals("") || paciente.cedula.equals("") ||
+             paciente.enfermedad.equals("") ) {
+             throw Exception("Uno de los campos esta vacio")
+         }
 
+         if (paciente.cedula!!.length == 10 ) {
+             throw Exception("La cedula debe tener 10 digitos")
 
+         } else {
+             return pacienteRepository.save(paciente)
+         }
+
+     }   catch(ex: Exception){
+         throw ResponseStatusException(
+             HttpStatus.NOT_FOUND, ex.message, ex)
+
+    }
     }
 
     fun update (@RequestBody paciente: Paciente): Paciente {
