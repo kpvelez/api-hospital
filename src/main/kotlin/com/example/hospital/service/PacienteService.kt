@@ -46,6 +46,7 @@ class PacienteService {
            val response = pacienteRepository.findById(paciente.idpaciente)
                ?: throw Exception("El ID ${paciente.idpaciente}  no existe")
 
+
            val response1 = pacienteRepository.findById(paciente.doctorIdDoctor)
                ?: throw Exception("El ID ${paciente.doctorIdDoctor}  no existe")
 
