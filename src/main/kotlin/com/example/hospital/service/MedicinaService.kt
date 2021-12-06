@@ -75,6 +75,8 @@ class MedicinaService {
            }
            val response = medicinaRepository.findById(medicina.idmedicina)
                ?: throw Exception("El ID ${medicina.idmedicina}  no existe")
+
+
            response.apply {
                this.dosis=medicina.dosis
            }
