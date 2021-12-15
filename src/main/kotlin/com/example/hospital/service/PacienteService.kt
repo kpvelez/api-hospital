@@ -1,6 +1,7 @@
 package com.example.hospital.service
 
 import com.example.hospital.model.Paciente
+import com.example.hospital.repository.DoctorRepository
 import com.example.hospital.repository.PacienteRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -14,6 +15,9 @@ class PacienteService {
 
     @Autowired
     lateinit var pacienteRepository: PacienteRepository
+    @Autowired
+    lateinit var doctorRepository: DoctorRepository
+
 
 
     fun list(): List<Paciente> {
@@ -26,7 +30,7 @@ class PacienteService {
 
      try {
 
-         val response = pacienteRepository.findById(paciente.doctorIdDoctor)
+         val response = doctorRepository.findById(paciente.doctorIdDoctor)
              ?: throw Exception("El ID ${paciente.doctorIdDoctor}  no existe")
 
          if(paciente.nombre.equals("") || paciente.apellido.equals("") || paciente.cedula.equals("") ||
