@@ -48,7 +48,7 @@ class DoctorService {
         throw Exception( "Uno de los campos esta vacio")
     }
 
-    if (doctor.cedula!!.length == 10 ) {
+    if (doctor.cedula!!.length == 11 ) {
         throw Exception("La cedula debe tener 10 digitos")
     } else {
         return doctorRepository.save(doctor)
@@ -63,9 +63,9 @@ class DoctorService {
 
     fun updateApellido (doctor: Doctor): Doctor {
       try {
-          if (doctor.apellido.equals("")){
-              throw Exception( "El campo apellido esta vacio")
-          }
+          doctor.apellido?.takeIf {it.trim().isNotEmpty()}
+              ?: throw Exception("El campo apellido esta vacio")
+
 
           val response = doctorRepository.findById(doctor.iddoctor)
               ?: throw Exception("El ID ${doctor.iddoctor}  no existe")

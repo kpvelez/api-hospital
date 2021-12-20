@@ -51,11 +51,13 @@ class MedicinaService {
 
     fun update (@RequestBody medicina: Medicina): Medicina {
        try {
+
+
            val response = medicinaRepository.findById(medicina.idmedicina)
                ?: throw Exception("El ID ${medicina.idmedicina}  no existe")
 
 
-           val response1 = medicinaRepository.findById(medicina.pacienteIdPaciente)
+           val response1 = pacienteRepository.findById(medicina.pacienteIdPaciente)
                ?: throw Exception("El ID ${medicina.pacienteIdPaciente}  no existe")
 
            if (medicina.dosis.equals("") || medicina.medicamento.equals("") || medicina.via.equals("")
@@ -64,7 +66,7 @@ class MedicinaService {
                throw Exception("Uno de los campos esta vacio")
            }
 
-           if(medicina.dosis!! < "0" && medicina.dosis!!  > "5" ){
+           if(medicina.dosis!! >  "0" && medicina.dosis!!  < "5" ){
                throw Exception("La dosis no puede excederse a esa cantidad")
            } else {
                return medicinaRepository.save(medicina)
@@ -79,9 +81,10 @@ class MedicinaService {
 
     fun updateDosis (medicina: Medicina): Medicina {
        try {
-           if (medicina.dosis.equals("")){
-               throw Exception("El campo dosis esta vacio")
-           }
+
+           medicina.dosis?.takeIf {it.trim().isNotEmpty()}
+               ?: throw Exception("El campo dosis esta vacio")
+
            val response = medicinaRepository.findById(medicina.idmedicina)
                ?: throw Exception("El ID ${medicina.idmedicina}  no existe")
 

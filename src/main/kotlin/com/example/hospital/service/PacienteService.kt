@@ -38,7 +38,7 @@ class PacienteService {
              throw Exception("Uno de los campos esta vacio")
          }
 
-         if (paciente.cedula!!.length == 10 ) {
+         if (paciente.cedula!!.length == 11 ) {
              throw Exception("La cedula debe tener 10 digitos")
 
          } else {
@@ -60,7 +60,7 @@ class PacienteService {
                ?: throw Exception("El ID ${paciente.idpaciente}  no existe")
 
 
-           val response1 = pacienteRepository.findById(paciente.doctorIdDoctor)
+           val response1 = doctorRepository.findById(paciente.doctorIdDoctor)
                ?: throw Exception("El ID ${paciente.doctorIdDoctor}  no existe")
 
            if (paciente.nombre.equals("") || paciente.apellido.equals("") || paciente.cedula.equals("") ||
@@ -68,7 +68,7 @@ class PacienteService {
                throw Exception("Uno de los campos esta vacio")
            }
 
-           if (paciente.cedula!!.length == 10 ) {
+           if (paciente.cedula!!.length == 11 ) {
                throw Exception("La cedula debe tener 10 digitos")
            } else{
                return pacienteRepository.save(paciente)
@@ -83,9 +83,10 @@ class PacienteService {
 
     fun updateApellido (paciente: Paciente):Paciente {
         try {
-            if (paciente.apellido.equals("")){
-                throw Exception("El campo apellido esta vacio")
-            }
+
+            paciente.apellido?.takeIf {it.trim().isNotEmpty()}
+                ?: throw Exception("El campo apellido esta vacio")
+
 
             val response = pacienteRepository.findById(paciente.idpaciente)
                 ?: throw Exception("El ID ${paciente.idpaciente}  no existe")
