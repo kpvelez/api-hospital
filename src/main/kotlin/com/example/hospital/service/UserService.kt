@@ -32,8 +32,63 @@ class UserService {
             }
     }
 
-    fun update (@RequestBody user: User): User {
-        return userRepository.save(user)
+    fun save (@RequestBody user: User): User {
+
+        try {
+            if(user.username.equals("") || user.password.equals("")) {
+
+                throw Exception( "Uno de los campos esta vacio")
+            } else {
+                return userRepository.save(user)
+            }
+        }  catch(ex: Exception){
+            throw ResponseStatusException(
+                HttpStatus.NOT_FOUND, ex.message, ex)
+        }
     }
+
+
+    fun update (@RequestBody user: User): User {
+        try {
+
+            val response = userRepository.findById(user.id)
+                ?: throw Exception("El ID ${user.id} de usuarios no existe")
+
+            if (user.username.equals("") || user.password.equals("")){
+                throw Exception( "Uno de los campos esta vacio")
+            } else {
+                return userRepository.save(user)
+            }
+        } catch(ex: Exception){
+            throw ResponseStatusException(
+                HttpStatus.NOT_FOUND, ex.message, ex)
+
+        }
+    }
+
+    fun updatePassword (user: User): User {
+        try {
+            user.password?.takeIf {it.trim().isNotEmpty()}
+                ?: throw Exception("El campo password esta vacio")
+
+
+            val response = userRepository.findById(user.id)
+                ?: throw Exception("El ID ${user.id} de usuarios no existe")
+            response.apply {
+                this.password=user.password
+            }
+            return userRepository.save(response)
+
+        }catch(ex: Exception){
+            throw ResponseStatusException(
+                HttpStatus.NOT_FOUND, ex.message, ex)
+        }
+    }
+
+    fun delete (id:Long): Boolean{
+        userRepository.deleteById(id)
+        return true
+    }
+
 
 }

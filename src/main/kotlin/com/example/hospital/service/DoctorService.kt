@@ -41,7 +41,7 @@ class DoctorService {
  try {
 
      val response = doctorRepository.findById(doctor.iddoctor)
-         ?: throw Exception("El ID ${doctor.iddoctor}  no existe")
+         ?: throw Exception("El ID ${doctor.iddoctor} de doctor no existe")
 
     if (doctor.nombre.equals("") || doctor.apellido.equals("") || doctor.cedula.equals("")
         || doctor.especialidad.equals("")){
@@ -68,7 +68,7 @@ class DoctorService {
 
 
           val response = doctorRepository.findById(doctor.iddoctor)
-              ?: throw Exception("El ID ${doctor.iddoctor}  no existe")
+              ?: throw Exception("El ID ${doctor.iddoctor} de doctor no existe")
           response.apply {
               this.apellido=doctor.apellido
           }

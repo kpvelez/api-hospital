@@ -31,7 +31,7 @@ class PacienteService {
      try {
 
          val response = doctorRepository.findById(paciente.doctorIdDoctor)
-             ?: throw Exception("El ID ${paciente.doctorIdDoctor}  no existe")
+             ?: throw Exception("El ID ${paciente.doctorIdDoctor} de doctor no existe")
 
          if(paciente.nombre.equals("") || paciente.apellido.equals("") || paciente.cedula.equals("") ||
              paciente.enfermedad.equals("") ) {
@@ -57,11 +57,11 @@ class PacienteService {
        try {
 
            val response = pacienteRepository.findById(paciente.idpaciente)
-               ?: throw Exception("El ID ${paciente.idpaciente}  no existe")
+               ?: throw Exception("El ID ${paciente.idpaciente} de paciente no existe")
 
 
            val response1 = doctorRepository.findById(paciente.doctorIdDoctor)
-               ?: throw Exception("El ID ${paciente.doctorIdDoctor}  no existe")
+               ?: throw Exception("El ID ${paciente.doctorIdDoctor} de doctor no existe")
 
            if (paciente.nombre.equals("") || paciente.apellido.equals("") || paciente.cedula.equals("") ||
                paciente.enfermedad.equals("")) {
@@ -89,7 +89,7 @@ class PacienteService {
 
 
             val response = pacienteRepository.findById(paciente.idpaciente)
-                ?: throw Exception("El ID ${paciente.idpaciente}  no existe")
+                ?: throw Exception("El ID ${paciente.idpaciente} de paciente no existe")
 
 
             response.apply {

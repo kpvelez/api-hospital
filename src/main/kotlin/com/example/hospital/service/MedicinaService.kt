@@ -30,7 +30,7 @@ class MedicinaService {
       try {
 
           val response1 = pacienteRepository.findById(medicina.pacienteIdPaciente)
-              ?: throw Exception("El ID ${medicina.pacienteIdPaciente}  no existe")
+              ?: throw Exception("El ID ${medicina.pacienteIdPaciente} de paciente no existe")
 
           if(medicina.dosis.equals("") || medicina.medicamento.equals("") || medicina.via.equals("")
               || medicina.fecha.equals("")){
@@ -54,11 +54,11 @@ class MedicinaService {
 
 
            val response = medicinaRepository.findById(medicina.idmedicina)
-               ?: throw Exception("El ID ${medicina.idmedicina}  no existe")
+               ?: throw Exception("El ID ${medicina.idmedicina} de medicamento no existe")
 
 
            val response1 = pacienteRepository.findById(medicina.pacienteIdPaciente)
-               ?: throw Exception("El ID ${medicina.pacienteIdPaciente}  no existe")
+               ?: throw Exception("El ID ${medicina.pacienteIdPaciente} de paciente no existe")
 
            if (medicina.dosis.equals("") || medicina.medicamento.equals("") || medicina.via.equals("")
                || medicina.fecha.equals("")) {
@@ -86,7 +86,7 @@ class MedicinaService {
                ?: throw Exception("El campo dosis esta vacio")
 
            val response = medicinaRepository.findById(medicina.idmedicina)
-               ?: throw Exception("El ID ${medicina.idmedicina}  no existe")
+               ?: throw Exception("El ID ${medicina.idmedicina} de medicamento no existe")
 
 
            response.apply {
