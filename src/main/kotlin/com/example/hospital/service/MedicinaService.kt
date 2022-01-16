@@ -32,10 +32,19 @@ class MedicinaService {
           val response1 = pacienteRepository.findById(medicina.pacienteIdPaciente)
               ?: throw Exception("El ID ${medicina.pacienteIdPaciente} de paciente no existe")
 
-          if(medicina.dosis.equals("") || medicina.medicamento.equals("") || medicina.via.equals("")
-              || medicina.fecha.equals("")){
-              throw Exception("Uno de los campos esta vacio")
-          }
+
+
+          medicina.dosis?.takeIf {it.trim().isNotEmpty()}
+              ?: throw Exception("El campo dosis esta vacio")
+
+          medicina.medicamento?.takeIf {it.trim().isNotEmpty()}
+              ?: throw Exception("El campo medicamento esta vacio")
+
+          medicina.fecha?.takeIf {it.trim().isNotEmpty()}
+              ?: throw Exception("El campo fecha esta vacio")
+
+          medicina.via?.takeIf {it.trim().isNotEmpty()}
+              ?: throw Exception("El campo via esta vacio")
 
           if(medicina.dosis!! > "0" && medicina.dosis!!  < "5" ){
               throw Exception("La dosis no puede excederse a esa cantidad")
@@ -60,11 +69,17 @@ class MedicinaService {
            val response1 = pacienteRepository.findById(medicina.pacienteIdPaciente)
                ?: throw Exception("El ID ${medicina.pacienteIdPaciente} de paciente no existe")
 
-           if (medicina.dosis.equals("") || medicina.medicamento.equals("") || medicina.via.equals("")
-               || medicina.fecha.equals("")) {
+           medicina.dosis?.takeIf {it.trim().isNotEmpty()}
+               ?: throw Exception("El campo dosis esta vacio")
 
-               throw Exception("Uno de los campos esta vacio")
-           }
+           medicina.medicamento?.takeIf {it.trim().isNotEmpty()}
+               ?: throw Exception("El campo medicamento esta vacio")
+
+           medicina.fecha?.takeIf {it.trim().isNotEmpty()}
+               ?: throw Exception("El campo fecha esta vacio")
+
+           medicina.via?.takeIf {it.trim().isNotEmpty()}
+               ?: throw Exception("El campo via esta vacio")
 
            if(medicina.dosis!! >  "0" && medicina.dosis!!  < "5" ){
                throw Exception("La dosis no puede excederse a esa cantidad")

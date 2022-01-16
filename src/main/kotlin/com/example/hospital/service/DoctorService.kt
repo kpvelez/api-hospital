@@ -23,13 +23,25 @@ class DoctorService {
 
     fun save (@RequestBody doctor: Doctor): Doctor {
  try {
-    if(doctor.nombre.equals("") || doctor.apellido.equals("") || doctor.cedula.equals("")
-        || doctor.especialidad.equals("") ) {
 
-        throw Exception( "Uno de los campos esta vacio")
-    } else {
-        return doctorRepository.save(doctor)
-    }
+        doctor.nombre?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo nombre esta vacio")
+
+        doctor.apellido?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo apellido esta vacio")
+
+        doctor.cedula?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo cedula esta vacio")
+
+        doctor.especialidad?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo especialidad esta vacio")
+
+     if (doctor.cedula!!.length == 11 ) {
+         throw Exception("La cedula debe tener 10 digitos")
+
+     } else {
+         return doctorRepository.save(doctor) }
+
   }  catch(ex: Exception){
      throw ResponseStatusException(
          HttpStatus.NOT_FOUND, ex.message, ex)
@@ -43,12 +55,20 @@ class DoctorService {
      val response = doctorRepository.findById(doctor.iddoctor)
          ?: throw Exception("El ID ${doctor.iddoctor} de doctor no existe")
 
-    if (doctor.nombre.equals("") || doctor.apellido.equals("") || doctor.cedula.equals("")
-        || doctor.especialidad.equals("")){
-        throw Exception( "Uno de los campos esta vacio")
-    }
+     doctor.nombre?.takeIf { it.trim().isNotEmpty() }
+         ?: throw Exception("El campo nombre esta vacio")
 
-    if (doctor.cedula!!.length == 11 ) {
+     doctor.apellido?.takeIf { it.trim().isNotEmpty() }
+         ?: throw Exception("El campo apellido esta vacio")
+
+     doctor.cedula?.takeIf { it.trim().isNotEmpty() }
+         ?: throw Exception("El campo cedula esta vacio")
+
+     doctor.especialidad?.takeIf { it.trim().isNotEmpty() }
+         ?: throw Exception("El campo especialidad esta vacio")
+
+
+     if (doctor.cedula!!.length == 11 ) {
         throw Exception("La cedula debe tener 10 digitos")
     } else {
         return doctorRepository.save(doctor)
@@ -80,9 +100,23 @@ class DoctorService {
       }
     }
 
+
     fun delete (idDoctor:Long): Boolean{
         doctorRepository.deleteById(idDoctor)
         return true
     }
 
+    fun verificarLetras(cedula: String?, nombre: String?, apellido: String?):Boolean{
+        if (cedula?.length!! == 10){
+            return false
+        }
+        if (nombre?.length!! < 20){
+            return false
+        }
+        if (apellido?.length!! < 20){
+            return false
+        }
+
+        return true
+    }
 }

@@ -33,10 +33,18 @@ class PacienteService {
          val response = doctorRepository.findById(paciente.doctorIdDoctor)
              ?: throw Exception("El ID ${paciente.doctorIdDoctor} de doctor no existe")
 
-         if(paciente.nombre.equals("") || paciente.apellido.equals("") || paciente.cedula.equals("") ||
-             paciente.enfermedad.equals("") ) {
-             throw Exception("Uno de los campos esta vacio")
-         }
+
+         paciente.nombre?.takeIf { it.trim().isNotEmpty() }
+             ?: throw Exception("El campo nombre esta vacio")
+
+         paciente.apellido?.takeIf { it.trim().isNotEmpty() }
+             ?: throw Exception("El campo apellido esta vacio")
+
+         paciente.cedula?.takeIf { it.trim().isNotEmpty() }
+             ?: throw Exception("El campo cedula esta vacio")
+
+         paciente.enfermedad?.takeIf { it.trim().isNotEmpty() }
+             ?: throw Exception("El campo enfermedad esta vacio")
 
          if (paciente.cedula!!.length == 11 ) {
              throw Exception("La cedula debe tener 10 digitos")
@@ -63,10 +71,17 @@ class PacienteService {
            val response1 = doctorRepository.findById(paciente.doctorIdDoctor)
                ?: throw Exception("El ID ${paciente.doctorIdDoctor} de doctor no existe")
 
-           if (paciente.nombre.equals("") || paciente.apellido.equals("") || paciente.cedula.equals("") ||
-               paciente.enfermedad.equals("")) {
-               throw Exception("Uno de los campos esta vacio")
-           }
+           paciente.nombre?.takeIf { it.trim().isNotEmpty() }
+               ?: throw Exception("El campo nombre esta vacio")
+
+           paciente.apellido?.takeIf { it.trim().isNotEmpty() }
+               ?: throw Exception("El campo apellido esta vacio")
+
+           paciente.cedula?.takeIf { it.trim().isNotEmpty() }
+               ?: throw Exception("El campo cedula esta vacio")
+
+           paciente.enfermedad?.takeIf { it.trim().isNotEmpty() }
+               ?: throw Exception("El campo enfermedad esta vacio")
 
            if (paciente.cedula!!.length == 11 ) {
                throw Exception("La cedula debe tener 10 digitos")
