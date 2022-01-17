@@ -176,10 +176,12 @@ class UserService {
         if (validacion == 10) {
             validacion = 0
         }
+          if(validacion != d10.toInt()){
+              return false
+          }
 
-        return validacion == d10.toInt()
+        return true
     }
-
 }
 
 
