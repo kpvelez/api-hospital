@@ -143,9 +143,11 @@ class UserService {
         if (primerosDig.toInt() < 1 || primerosDig.toInt() > 24){
             return false
         }
+
         if (d3.toInt() > 6){
             return false
         }
+
         val pares = d2.toInt() + d4.toInt() + d6.toInt() + d8.toInt()
 
         val Impar = d1.toInt() * 2
@@ -176,6 +178,7 @@ class UserService {
         if (validacion == 10) {
             validacion = 0
         }
+
           if(validacion != d10.toInt()){
               return false
           }
