@@ -1,6 +1,7 @@
 package com.example.hospital.controller
 
 import com.example.hospital.model.Doctor
+import com.example.hospital.model.Medicina
 import com.example.hospital.service.DoctorService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*
 
         }
         @PostMapping
-        fun save (@RequestBody doctor: Doctor): Doctor {
+        fun save (@RequestBody doctor: Doctor): Doctor{
             return doctorService.save(doctor)
         }
 

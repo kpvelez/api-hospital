@@ -1,6 +1,7 @@
 package com.example.hospital.service
 
 import com.example.hospital.model.Doctor
+import com.example.hospital.model.Medicina
 import com.example.hospital.repository.DoctorRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -49,7 +50,9 @@ class DoctorService {
     }
 
 
-    fun update (@RequestBody doctor: Doctor): Doctor {
+    fun update (@RequestBody doctor: Doctor): Doctor
+
+    {
  try {
 
      val response = doctorRepository.findById(doctor.iddoctor)
