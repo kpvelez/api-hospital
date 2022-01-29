@@ -104,9 +104,18 @@ class DoctorService {
     }
 
 
-    fun delete (idDoctor:Long): Boolean{
-        doctorRepository.deleteById(idDoctor)
-        return true
+    fun delete (idDoctor:Long?): Boolean{
+
+        try {
+            doctorRepository.findById(idDoctor)
+                ?: throw Exception("El ID de doctor no existe")
+            doctorRepository.deleteById(idDoctor!!)
+            return true
+
+        }catch(ex: Exception){
+            throw Exception()
+        }
+
     }
 
     fun verificarLetras(cedula: String?, nombre: String?, apellido: String?):Boolean{

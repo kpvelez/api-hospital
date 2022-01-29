@@ -115,9 +115,18 @@ class MedicinaService {
     }
 
 
-    fun delete (idMedicina:Long): Boolean{
-        medicinaRepository.deleteById(idMedicina)
-        return true
+    fun delete (idMedicina:Long?): Boolean{
+
+        try {
+            medicinaRepository.findById(idMedicina)
+                ?: throw Exception("El ID de medicina no existe")
+            medicinaRepository.deleteById(idMedicina!!)
+            return true
+
+        }catch(ex: Exception){
+            throw Exception()
+        }
+
     }
 
 }

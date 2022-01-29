@@ -45,6 +45,8 @@ class PacienteServiceTest {
         doctorIdDoctor= 1
     }
 
+    //SAVE
+
     @Test
     fun saveIsCorrect(){
         Mockito.`when`(doctorRepository.findById(pacienteMock.doctorIdDoctor)).thenReturn(doctorMock)
@@ -57,8 +59,6 @@ class PacienteServiceTest {
         Assertions.assertEquals(response.cedula, newObject.cedula)
         Assertions.assertEquals(response.enfermedad, newObject.enfermedad)
         Assertions.assertEquals(response.doctorIdDoctor, newObject.doctorIdDoctor)
-        
-
 
     }
 
@@ -139,4 +139,105 @@ class PacienteServiceTest {
 
     }
 
+    //UPDATE
+
+
+    @Test
+    fun updateDoctorIsIdCorrect(){
+
+        Mockito.`when`(doctorRepository.findById(pacienteMock.doctorIdDoctor)).thenReturn(doctorMock)
+        Mockito.`when`(pacienteRepository.findById(returnObject.idpaciente)).thenReturn(returnObject)
+        Mockito.`when`(pacienteRepository.save(Mockito.any(Paciente::class.java))).thenReturn(returnObject)
+        val response = pacienteService.update(newObject)
+        Assertions.assertEquals(response.idpaciente, newObject.idpaciente)
+        Assertions.assertEquals(response.nombre, newObject.nombre)
+        Assertions.assertEquals(response.apellido, newObject.apellido)
+        Assertions.assertEquals(response.cedula, newObject.cedula)
+        Assertions.assertEquals(response.enfermedad, newObject.enfermedad)
+        Assertions.assertEquals(response.doctorIdDoctor, newObject.doctorIdDoctor)
+    }
+
+    @Test
+    fun updatePacienteIsIdFailedWhenIdNotExist() {
+        Assertions.assertThrows(Exception::class.java){
+
+            Mockito.`when`(doctorRepository.findById(pacienteMock.doctorIdDoctor)).thenReturn(doctorMock)
+            Mockito.`when`(pacienteRepository.findById(returnObject.idpaciente)).thenReturn(null)
+            Mockito.`when`(pacienteRepository.save(Mockito.any(Paciente::class.java))).thenReturn(returnObject)
+            pacienteService.update(newObject)
+        }
+    }
+
+    @Test
+    fun updatePacienteFailedNombre(){
+        Assertions.assertThrows(Exception::class.java) {
+            pacienteMock.apply { nombre= " "}
+            Mockito.`when`(pacienteRepository.findById(returnObject.idpaciente)).thenReturn(pacienteMock)
+            Mockito.`when`(pacienteRepository.save(Mockito.any(Paciente::class.java))).thenReturn(pacienteMock)
+            pacienteService.update(pacienteMock)
+        }
+    }
+
+    @Test
+    fun updatePacienteFailedApellido(){
+        Assertions.assertThrows(Exception::class.java) {
+            pacienteMock.apply { apellido= " "}
+            Mockito.`when`(pacienteRepository.findById(returnObject.idpaciente)).thenReturn(pacienteMock)
+            Mockito.`when`(pacienteRepository.save(Mockito.any(Paciente::class.java))).thenReturn(pacienteMock)
+            pacienteService.update(pacienteMock)
+        }
+
+    }
+
+    @Test
+    fun updatePacienteFailedCedula(){
+        Assertions.assertThrows(Exception::class.java) {
+            pacienteMock.apply { cedula= " "}
+            Mockito.`when`(pacienteRepository.findById(returnObject.idpaciente)).thenReturn(pacienteMock)
+            Mockito.`when`(pacienteRepository.save(Mockito.any(Paciente::class.java))).thenReturn(pacienteMock)
+            pacienteService.update(pacienteMock)
+        }
+
+    }
+
+    @Test
+    fun updatePacienteFailedEnfermedad(){
+        Assertions.assertThrows(Exception::class.java) {
+            pacienteMock.apply { enfermedad= " "}
+            Mockito.`when`(pacienteRepository.findById(returnObject.idpaciente)).thenReturn(pacienteMock)
+            Mockito.`when`(pacienteRepository.save(Mockito.any(Paciente::class.java))).thenReturn(pacienteMock)
+            pacienteService.update(pacienteMock)
+        }
+    }
+
+    @Test
+    fun updatePacienteFailedIdDoctor(){
+        Assertions.assertThrows(Exception::class.java) {
+            pacienteMock.apply { doctorIdDoctor}
+            Mockito.`when`(pacienteRepository.findById(returnObject.idpaciente)).thenReturn(pacienteMock)
+            Mockito.`when`(pacienteRepository.save(Mockito.any(Paciente::class.java))).thenReturn(pacienteMock)
+            pacienteService.update(pacienteMock)
+        }
+    }
+
+
+    //DELETE
+
+    @Test
+    fun deleteDoctorCorrect(){
+        Mockito.`when`(pacienteRepository.findById(newObject.idpaciente)).thenReturn(returnObject)
+        Mockito.`when`(pacienteRepository.save(Mockito.any(Paciente::class.java))).thenReturn(returnObject)
+        val response = pacienteService.delete(newObject.idpaciente)
+        Assertions.assertEquals(response, true)
+    }
+
+    @Test
+    fun deleteDoctorIsFailed(){
+        Assertions.assertThrows(Exception::class.java) {
+            Mockito.`when`(pacienteRepository.findById(newObject.idpaciente)).thenReturn(null)
+            Mockito.`when`(pacienteRepository.save(Mockito.any(Paciente::class.java))).thenReturn(returnObject)
+            val response = pacienteService.delete(newObject.idpaciente)
+            Assertions.assertEquals(response, true)
+        }
+    }
 }

@@ -118,9 +118,17 @@ class PacienteService {
         }
     }
 
-    fun delete (idPaciente:Long): Boolean{
-        pacienteRepository.deleteById(idPaciente)
-        return true
-    }
+    fun delete (idPaciente:Long?): Boolean{
+
+            try {
+                pacienteRepository.findById(idPaciente)
+                    ?: throw Exception("El ID de paciente no existe")
+                pacienteRepository.deleteById(idPaciente!!)
+                return true
+
+            }catch(ex: Exception){
+                throw Exception()
+            }
+         }
 
 }
