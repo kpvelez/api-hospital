@@ -47,7 +47,6 @@ class DoctorServiceTestEva {
     val doctorMock = Gson().fromJson(jsonString, Doctor::class.java)
 
 
-
     @Test
     fun updateDoctorIsCorrect(){
         Mockito.`when`(doctorRepository.findById(returnObject.iddoctor)).thenReturn(returnObject)

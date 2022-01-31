@@ -70,12 +70,17 @@ class DoctorService {
      doctor.especialidad?.takeIf { it.trim().isNotEmpty() }
          ?: throw Exception("El campo especialidad esta vacio")
 
+      if (!validarNombres(doctor.nombre!!)){
+          throw Exception("El campo 'nombre' no pertenece a la lista")
+      } else{
+          return doctorRepository.save(doctor) }
 
-     if (!validarNombres(doctor.nombre!!)){
-         throw Exception("El campo 'nombre' no pertenece a la lista")
-     }
+     if (doctor.cedula!!.length == 11 ) {
+        throw Exception("La cedula debe tener 10 digitos")
 
-     return doctorRepository.save(doctor)
+    } else {
+        return doctorRepository.save(doctor)
+    }
 
 } catch(ex: Exception){
      throw ResponseStatusException(
@@ -122,7 +127,7 @@ class DoctorService {
 
     }
 
-    val lista= listOf<String>("Mariscos","Cafe","FoodFast")
+    val lista= listOf<String>("Paul","Raul","Pedro")
 
     fun validarNombres(nombre: String): Boolean {
         for (i in lista){
