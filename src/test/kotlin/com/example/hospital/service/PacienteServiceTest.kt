@@ -71,7 +71,6 @@ class PacienteServiceTest {
 
     @Test
     fun savePaciente(){
-        //PAra actualizar
         Mockito.`when`(doctorRepository.findById(pacienteMock.doctorIdDoctor)).thenReturn(doctorMock)
 
         Mockito.`when`(pacienteRepository.save(Mockito.any(Paciente::class.java))).thenReturn(pacienteMock)

@@ -71,17 +71,19 @@ class DoctorService {
          ?: throw Exception("El campo especialidad esta vacio")
 
 
-     if (doctor.cedula!!.length == 11 ) {
-        throw Exception("La cedula debe tener 10 digitos")
-    } else {
-        return doctorRepository.save(doctor)
-    }
+     if (!validarNombres(doctor.nombre!!)){
+         throw Exception("El campo 'nombre' no pertenece a la lista")
+     }
+
+     return doctorRepository.save(doctor)
+
 } catch(ex: Exception){
      throw ResponseStatusException(
          HttpStatus.NOT_FOUND, ex.message, ex)
 
     }
     }
+
 
 
     fun updateApellido (doctor: Doctor): Doctor {
@@ -95,6 +97,8 @@ class DoctorService {
           response.apply {
               this.apellido=doctor.apellido
           }
+
+
           return doctorRepository.save(response)
 
       }catch(ex: Exception){
@@ -117,6 +121,18 @@ class DoctorService {
         }
 
     }
+
+    val lista= listOf<String>("Mariscos","Cafe","FoodFast")
+
+    fun validarNombres(nombre: String): Boolean {
+        for (i in lista){
+            if (nombre == i){
+                return true
+            }
+        }
+        return false
+    }
+
 
     fun verificarLetras(cedula: String?, nombre: String?, apellido: String?):Boolean{
         if (cedula?.length!! == 10){
